@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #define SIZE 5								//스택 크기
 
-int top;									//스택을 가리키는 위치
-int stack[SIZE];
+int top=(0);									//스택을 가리키는 위치
+int stack[SIZE] = { 0, };
 
 void showStack();
 void searchData(int i);
@@ -22,10 +22,6 @@ void wait()									//키누르기 전까지 대기
 
 void menu()									//메인매뉴
 {
-	int Select;
-	int i = 0;
-	for (;;)
-	{
 		clearScreen;
 		puts("----- Stack Simultation Program -----\n");
 		puts("     Push Data     ---------(1)");
@@ -33,35 +29,6 @@ void menu()									//메인매뉴
 		puts("     Show Stack    ---------(3)");
 		puts("     Search Data   ---------(4)");
 		puts("     Quit Program  ---------(5)\n");
-		printf("Select Work(1~5) : ");
-		scanf_s("%d", &Select);
-
-		switch(Select)
-		{
-			case 1:
-				printf("Enter integer to push : ");
-				scanf_s("%d", &i);
-				push(i);
-				break;
-			case 2:
-				pop();
-				break;
-			case 3:
-				showStack();
-				break;
-			case 4:
-				printf("Enter the value to find : ");
-				scanf_s("%d", &i);
-				searchData(i);
-				break;
-			case 5:
-				exit(0);
-			default:
-				puts("Please Enter The Correct Number");
-				wait;
-				break;
-		}
-	}
 }
 
 int isnegative(int x)						//매개 변수로 받은 정수가 음수인지 판별
@@ -78,7 +45,7 @@ int isEmpty()							//가리키는 스택이 비어있는지 확인
 
 int isFull()							//스택이 가득 찼는지 확인
 {
-	top == SIZE - 1;
+	top == SIZE;
 
 	if (stack[top] == NULL) return 0;	//비어있음 0 아니면 1 리턴
 	else return 1;
@@ -86,17 +53,18 @@ int isFull()							//스택이 가득 찼는지 확인
 
 int push(int x)							//입력받은 정수 스택에 넣기
 {
+	top++;
 	scanf_s("%d", &stack[top]);
 	isnegative(stack[top]);
 	if (isnegative == 0)
 	{
 		puts("Error : You entered negative number, Please Enter positive number.");
 		stack[top] = 0;
+		top--;
 		return 0;						//넣었으면 1, 못넣었으면 0 리턴
 	}
 	else
 	{
-		top++;
 		return 1;
 	}
 }
@@ -104,7 +72,7 @@ int push(int x)							//입력받은 정수 스택에 넣기
 int pop()								//가리키는 스택 내용 출력
 {
 	top--;
-	if (stack[top] < (-1))
+	if (stack[top] <=0)
 	{
 		puts("Error : Stack is empty.");
 		top = top + 1;
@@ -112,26 +80,26 @@ int pop()								//가리키는 스택 내용 출력
 	}
 	else
 	{
-		printf("%d\n", stack[top + 1]);
-		return stack[top-1];
+		top--;
+		return stack[top+1];
 	}
 
 }
 
 void showStack()						//스택 모든 내용 출력
 {
-	if (stack[top]==(-1))
+	if (stack[top]==0)
 		puts("Stack is Empty.");
 	else
 	{
 		for (;;)
 		{
-			if (top == -1) break;
-			else
+			if(top=!0)
 			{
 				printf("%d", stack[top]);
 				top--;
 			}
+			else break;
 		}
 	}
 }
@@ -151,10 +119,10 @@ void searchData(int i)					//특정 값 찾기
 			top--;
 			if (stack[top] == i);
 			{
-				printf("%d is entered at stack %d\n", i, top + 1);
+				printf("%d is entered at stack %d\n", i, top);
 				break;
 			}
-			if (top == (-1))
+			if (top == (0))
 			{
 				puts("No found");
 				break;
@@ -165,6 +133,38 @@ void searchData(int i)					//특정 값 찾기
 
 void main()
 {
-	menu;
+	int Select;
+	int i = 0;
+	for (;;)
+	{
+		menu();
+		printf("Select Work(1~5) : ");
+		scanf_s("%d", &Select);
 
+		switch (Select)
+		{
+		case 1:
+			printf("Enter integer to push : ");
+			scanf_s("%d", &i);
+			push(i);
+			break;
+		case 2:
+			pop();
+			break;
+		case 3:
+			showStack();
+			break;
+		case 4:
+			printf("Enter the value to find : ");
+			scanf_s("%d", &i);
+			searchData(i);
+			break;
+		case 5:
+			exit(0);
+		default:
+			puts("Please Enter The Correct Number");
+			wait;
+			break;
+		}
+	}
 }
