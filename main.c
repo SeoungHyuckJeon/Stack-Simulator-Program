@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 5								//스택 크기
+#define SIZE 6								//스택 크기
 
 int top=(0);									//스택을 가리키는 위치
 int stack[SIZE] = { 0, };
@@ -39,15 +39,15 @@ int isnegative(int x)						//매개 변수로 받은 정수가 음수인지 판별
 
 int isEmpty()							//가리키는 스택이 비어있는지 확인
 {
-	if (stack[top - 1] == NULL) return 1;
+	if (stack[top] == 0) return 1;
 	else return 0;
 }
 
 int isFull()							//스택이 가득 찼는지 확인
 {
-	top == SIZE;
+	top == SIZE-1;
 
-	if (stack[top] == NULL) return 0;	//비어있음 0 아니면 1 리턴
+	if (stack[top] == 0) return 0;	//비어있음 0 아니면 1 리턴
 	else return 1;
 }
 
@@ -56,7 +56,7 @@ int push(int x)							//입력받은 정수 스택에 넣기
 	top++;
 	scanf_s("%d", &stack[top]);
 	isnegative(stack[top]);
-	if (isnegative == 0)
+	if (isnegative == 1)
 	{
 		puts("Error : You entered negative number, Please Enter positive number.");
 		stack[top] = 0;
@@ -71,17 +71,15 @@ int push(int x)							//입력받은 정수 스택에 넣기
 
 int pop()								//가리키는 스택 내용 출력
 {
-	top--;
-	if (stack[top] <=0)
+	if (isEmpty()==1)
 	{
 		puts("Error : Stack is empty.");
-		top = top + 1;
 		return -1;						//꺼냈으면 가리키는 스택 값, 못꺼냈으면 -1 리턴 
 	}
 	else
 	{
+		return stack[top];
 		top--;
-		return stack[top+1];
 	}
 
 }
@@ -94,7 +92,7 @@ void showStack()						//스택 모든 내용 출력
 	{
 		for (;;)
 		{
-			if(top=!0)
+			if(top!=0)
 			{
 				printf("%d", stack[top]);
 				top--;
@@ -155,8 +153,6 @@ void main()
 			showStack();
 			break;
 		case 4:
-			printf("Enter the value to find : ");
-			scanf_s("%d", &i);
 			searchData(i);
 			break;
 		case 5:
