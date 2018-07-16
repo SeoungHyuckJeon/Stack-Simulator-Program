@@ -45,20 +45,25 @@ int isEmpty()							//가리키는 스택이 비어있는지 확인
 
 int isFull()							//스택이 가득 찼는지 확인
 {
-	top == SIZE-1;
-
-	if (stack[top] == 0) return 0;	//비어있음 0 아니면 1 리턴
+	if (top == 7) return 0;	//가득찼으면 0, 아니면 1리턴
 	else return 1;
 }
 
 int push(int x)							//입력받은 정수 스택에 넣기
 {
 	top++;
+	if(isFull() == 0)
+	{
+		stack[top] = 0;
+		top--;
+		puts("Stack is Fulled");
+		return 1;
+	}
 	scanf_s("%d", &stack[top]);
 	isnegative(stack[top]);
 	if (isnegative == 1)
 	{
-		puts("Error : You entered negative number, Please Enter positive number.");
+		puts("Error : You entered the negative number, Please Enter the positive number.");
 		stack[top] = 0;
 		top--;
 		return 0;						//넣었으면 1, 못넣었으면 0 리턴
@@ -69,7 +74,7 @@ int push(int x)							//입력받은 정수 스택에 넣기
 	}
 }
 
-int pop()								//가리키는 스택 내용 출력
+int pop()								//가리키는 스택 내용 출력		//아무내용도 안나오는 현상
 {
 	if (isEmpty()==1)
 	{
@@ -94,7 +99,7 @@ void showStack()						//스택 모든 내용 출력
 		{
 			if(top!=0)
 			{
-				printf("%d", stack[top]);
+				printf("%d\n", stack[top]);
 				top--;
 			}
 			else break;
@@ -129,7 +134,7 @@ void searchData(int i)					//특정 값 찾기
 	}
 }
 
-void main()
+void main()										//내용출력시 스택내용 사라지는 현사ㅏㅏㅇ
 {
 	int Select;
 	int i = 0;
@@ -142,8 +147,6 @@ void main()
 		switch (Select)
 		{
 		case 1:
-			printf("Enter integer to push : ");
-			scanf_s("%d", &i);
 			push(i);
 			break;
 		case 2:
