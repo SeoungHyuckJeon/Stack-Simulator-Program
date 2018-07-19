@@ -92,18 +92,24 @@ int pop()								//가리키는 스택 내용 출력
 
 void showStack()						//스택 모든 내용 출력
 {
+	int b=0;
 	if (stack[top]==0)
 		puts("Stack is Empty.");
 	else
 	{
+		b = top;
 		for (;;)
 		{
-			if(top!=0)
+			if (top != 0)
 			{
 				printf("%d\n", stack[top]);
 				top--;
 			}
-			else break;
+			else
+			{
+				top = b;
+				break;
+			}
 		}
 	}
 }
@@ -120,27 +126,22 @@ void searchData(int i)					//특정 값 찾기
 		printf("Enter the search data : ");
 		scanf_s("%d", &i);
 		b = top;
-//		for (;;)
-	//	{  
-	//		if (i==stack[top]);
-	//		{
-	//			printf("%d is entered at stack %d\n", i, top);
-	//			top = b;
-	//			break;
-	//		}
-	//		else if (top == 0)
-	//		{
-	//			puts("NO FOUND");
-	//			top = b;
-	//			break;
-	//		}
-	//	}
-		do
-		{
-			top--;
-		} while (i == stack[top]);
-		printf("%d is entered at stack %d\n", i, top);
-		top = b;
+			for(top=b;top>0;top--)
+			{
+				if (i == stack[top])
+				{
+					printf("%d is entered at stack %d\n", i, top);
+					top = b;
+					break;
+				}
+
+				else if(top<2 && i!=stack[top])
+				{
+					puts("NO FOUND");
+					top = b;
+					break;
+				}
+			}
 	}
 }
 
